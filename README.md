@@ -1,0 +1,1 @@
+A simple text-based role-playing game made based on a JavaScript tutorial on freeCodeCamp. Utilizes basic HTML, CSS, and JavaScript. 

@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+  background-color: #403B3E;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#game-container {
+  background-color: #084C61;
+  width: 40rem;
+  border: 2px solid white;
+  align-content: center;
+  padding: 1rem;
+  margin-top: 5rem;
+}
+
+#game-display {
+  background-color: white;
+  border: 2px solid black;
+  padding: 0;
+}
+
+#player-stats {
+  display: flex;
+  padding: 0.5rem;
+  gap: 2rem;
+  font-weight: bold;
+  color: black;
+  border: 1px solid black;
+}
+
+#enemy-stats {
+  display: none;
+  gap: 2.5rem;
+  font-weight: bold;
+  background-color: #a40000;
+  color: white;
+  padding: 0.5rem;
+  border: 1px solid black;
+}
+
+#button-container {
+  display: flex;
+  gap: 2.5rem;
+  padding: 0.5rem;
+  border: 1px solid black;
+}
+
+button {
+  background-color: #FFC857;
+  padding: 0.4rem;
+  border: 1px solid #403B3E;
+  border-radius: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+#text-container {
+  padding: 0.5rem;
+  border: 1px solid black;
+}
+
+#text-container p {
+  margin-bottom: 1rem;
+}
