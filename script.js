@@ -9,7 +9,7 @@ const textContainer = document.querySelector("#text-container");
 
 let exp = 0;
 let confidence = 100;
-let cred = 50;
+let cred = 500; // Default 100; Value raised temporarily for testing
 let enemyName = document.querySelector("#enemy-name");
 let enemyBugs = document.querySelector("enemy-bugs");
 
@@ -66,15 +66,15 @@ let shopItems = [
   },
   {
     "item name": "Gamer Chair",
-    "power": 8
+    "power": 10
   },
   {
-    "item name": "Nerd Tattoo",
-    "power": 10,
+    "item name": "Nerd Glasses",
+    "power": 20,
   },
   {
     "item name": "BS in CS",
-    "power": 25
+    "power": 30
   }
 ]
 
@@ -126,7 +126,7 @@ function goInterview() {
 }
 
 function buyConfidence() {
-  if (cred <= 10) {
+  if (cred < 10) {
     textContainer.textContent = "Not enough cred!";
   } else {
   cred -= 10;
@@ -138,15 +138,36 @@ function buyConfidence() {
 }
 
 function buyGear() {
-  if (cred <= 30) {
+  if (shopItems.length !== 0) {
+
+  if (cred < 30) {
     textContainer.textContent = "Not enough cred!";
   } else {
   cred -= 30;
   credText.textContent = cred;
   inventory.push(shopItems[0]);
   shopItems.shift();
-  textContainer.textContent = "You bought a " + inventory[-1]["item name"] + ".";
+  textContainer.textContent = "You bought " + 
+  inventory[inventory.length -1]["item name"] + ".";
+  showInventory();
 }
+
+  } else {
+    textContainer.textContent = "Shop is all sold out! Wnat to sell?";
+    button2.textContent = "Sell gear (30 cred)";
+    button2.onclick = sellGear;
+  }
+}
+
+function sellGear() {
+  if (inventory.length === 1) {
+    textContainer.textContent = "Don't sell your only item!";
+  } else {
+    textContainer.textContent = "You sold " + inventory[0]["item name"] + " for 30 cred.";
+    shopItems.push(inventory[0]);
+    inventory.shift();
+    showInventory();
+  }
 }
 
 function battleEasy() {
@@ -164,6 +185,16 @@ function attack() {
 function guard() {
   
 }
+
+function showInventory() {
+  textContainer.textContent += "\nCurrent inventory: "
+  for (i = 0; i < inventory.length; i++) {
+    textContainer.textContent += inventory[i]["item name"]
+    if (i != inventory.length - 1) { // Neatly formats inventory listing so that all but last item are followed by ", "
+      textContainer.textContent += ", "
+    }
+  }
+ }
 
 function update(location) {
   enemyStats.style.display = "none";
