@@ -1,3 +1,7 @@
+// Battle sequenes starting, but bugs text not displaying
+// ToDo: Simplify enemy array of objects into one object for easyEnemies,
+// one object for hardEnemies with an array just for the names?
+
 const button1 = document.querySelector("#button-1");
 const button2 = document.querySelector("#button-2");
 const button3 = document.querySelector("#button-3");
@@ -40,23 +44,11 @@ const locations = [
     "text": "Ready to take on a code challenge?"
   },
   {
-    "name": "easy battle",
+    "name": "battle mode",
     "button text": ["Attack", "Think", "Run"],
     "button function": [attack, guard, goHome],
     "text": "Filler text."
   },
-  {
-    "name": "hard battle",
-    "button text": ["Attack", "Think", "Run"],
-    "button function": [attack, guard, goHome],
-    "text": "Filler text."
-  },
-  {
-    "name": "interview",
-    "button text": ["Attack", "Think", "Run"],
-    "button function": [attack, guard, goHome],
-    "text": "The dreaded job interview code challenge! This one's a real monster!"
-  }
 ]
 
 let shopItems = [
@@ -85,21 +77,37 @@ let easyEnemies = [
     "power": 10,
   },
   {
-    "name": "Rock Paper Scissors page",
+    "name": "Rock Paper Scissors",
     "bugs": 20,
     "power": 10,
   },
   {
-    "name": "Landing Page",
+    "name": "To-Do List",
     "bugs": 20,
     "power": 10
   }
 ];
 
-let hardEnemies = [];
+let hardEnemies = [
+  {
+    "name": "Message Board",
+    "bugs": 100,
+    "power": 20,
+  },
+  {
+    "name": "Shopping Cart",
+    "bugs": 100,
+    "power": 20,
+  },
+  {
+    "name": "Tic Tac Toe",
+    "bugs": 100,
+    "power": 20
+  }
+];
 
 let interviewBoss = {
-  "name": " Dynamic ecommerce page",
+  "name": "\n5-D Chess in Space with Crypto Betting",
   "bugs": 300,
   "power": 30
 };
@@ -107,6 +115,19 @@ let interviewBoss = {
 button1.onclick = goShop;
 button2.onclick = goCode;
 button3.onclick = goInterview;
+
+// Location / display functions
+
+function update(location) {
+  enemyStats.style.display = "none";
+  button1.textContent = location["button text"][0];
+  button2.textContent = location["button text"][1];
+  button3.textContent = location["button text"][2];
+  textContainer.textContent = location["text"];
+  button1.onclick = location["button function"][0];
+  button2.onclick = location["button function"][1];
+  button3.onclick = location["button function"][2];
+}
 
 function goHome() {
   update(locations[0])
@@ -120,10 +141,36 @@ function goCode() {
   update(locations[2])
 }
 
-function goInterview() {
-  update(locations[5])
+function battleEasy() {
+  update(locations[3]);
   enemyStats.style.display = "flex";
+  enemy = easyEnemies[Math.floor(Math.random() * 3)]; // Selects random index from easyEnemies array
+  enemyName.textContent = "\n" + enemy["name"];
+  enemyBugs = enemy["bugs"]
+  enemyBugs.textContent = enemyBugs;
+  textContainer.textContent = "Now coding " + enemy["name"] + ". Squash those bugs!";
 }
+
+function battleHard() {
+  update(locations[3]);
+  enemyStats.style.display = "flex";
+  enemy = hardEnemies[Math.floor(Math.random() * 3)]; // Selects random index from hardEnemies array
+  enemyName.textContent = "\n" + enemy["name"];
+  enemyBugs = enemy["bugs"]
+  enemyBugs.textContent = enemyBugs;
+  textContainer.textContent = "Now coding " + enemy["name"] + ". Squash those bugs!";
+}
+
+function goInterview() {
+  update(locations[3])
+  enemyStats.style.display = "flex";
+  textContainer.textContent = "The dreaded job interview code challenge! This one's a real monster!"
+  enemyName.textContent = interviewBoss["name"];
+  enemyBugs = interviewBoss["bugs"];
+  enemyBugs.textContent = enemyBugs;
+}
+
+// Shop functions
 
 function buyConfidence() {
   if (cred < 10) {
@@ -170,22 +217,6 @@ function sellGear() {
   }
 }
 
-function battleEasy() {
-  enemyStats.style.display = "flex";
-}
-
-function battleHard() {
-  enemyStats.style.display = "flex";
-}
-
-function attack() {
-  
-}
-
-function guard() {
-  
-}
-
 function showInventory() {
   textContainer.textContent += "\nCurrent inventory: "
   for (i = 0; i < inventory.length; i++) {
@@ -196,13 +227,12 @@ function showInventory() {
   }
  }
 
-function update(location) {
-  enemyStats.style.display = "none";
-  button1.textContent = location["button text"][0];
-  button2.textContent = location["button text"][1];
-  button3.textContent = location["button text"][2];
-  textContainer.textContent = location["text"];
-  button1.onclick = location["button function"][0];
-  button2.onclick = location["button function"][1];
-  button3.onclick = location["button function"][2];
+// Battle mechanics functions
+
+function attack() {
+  
+}
+
+function guard() {
+  
 }
