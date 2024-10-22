@@ -1,6 +1,3 @@
-// TODO: Factory player XP into damage dealt/received in battle
-// TODO: Update strings to template literals, objects to dot notation
-
 const button1 = document.querySelector("#button-1");
 const button2 = document.querySelector("#button-2");
 const button3 = document.querySelector("#button-3");
@@ -13,6 +10,7 @@ const bugsText = document.querySelector("#bugs-text");
 const textContainer = document.querySelector("#text-container");
 const text1 = document.querySelector("#text1");
 const text2 = document.querySelector("#text2");
+const credits = document.querySelector("#credits");
 
 let exp = 0;
 let confidence = 100;
@@ -70,15 +68,15 @@ let shopItems = [
   },
   {
     "item name": "Gamer Chair",
-    "power": 10
+    "power": 6,
   },
   {
     "item name": "RGB Backlit Keyboard",
-    "power": 20,
+    "power": 8,
   },
   {
     "item name": "BS in CS",
-    "power": 30
+    "power": 10,
   }
 ]
 
@@ -115,8 +113,8 @@ let enemies = [
   },
   {
   "name": "5-D Chess in Space with Crypto Betting",
-  "bugs": 200,
-  "power": 20
+  "bugs": 250,
+  "power": 25
   }
 ]
 
@@ -157,7 +155,7 @@ function battleEasy() {
   enemyName.textContent = enemy["name"];
   enemyBugs = enemy["bugs"]
   bugsText.textContent = enemyBugs;
-  text1.textContent = "Now coding " + enemy["name"] + ". Squash those bugs!";
+  text1.textContent = `Now coding ${enemy["name"]}. Squash those bugs!`;
 }
 
 function battleHard() {
@@ -167,7 +165,7 @@ function battleHard() {
   enemyName.textContent = enemy["name"];
   enemyBugs = enemy["bugs"]
   bugsText.textContent = enemyBugs;
-  text1.textContent = "Now coding " + enemy["name"] + ". Squash those bugs!";
+  text1.textContent = `Now coding ${enemy["name"]}. Squash those bugs!`;
 }
 
 function goInterview() {
@@ -205,7 +203,7 @@ function buyGear() {
   credText.textContent = cred;
   inventory.push(shopItems[0]);
   shopItems.shift();
-  text1.textContent = "You bought " + inventory[inventory.length -1]["item name"] + ".";
+  text1.textContent = `You bought ${inventory[inventory.length -1]["item name"]}.`;
   showInventory();
 }
 
@@ -220,7 +218,9 @@ function sellGear() {
   if (inventory.length === 1) {
     text1.textContent = "Don't sell your only item!";
   } else {
-    text1.textContent = "You sold " + inventory[0]["item name"] + " for 30 cred.";
+    cred += 30;
+    credText.textContent = cred;
+    text1.textContent = `You sold ${inventory[0]["item name"]} for 30 cred.`;
     shopItems.push(inventory[0]);
     inventory.shift();
     showInventory();
@@ -245,13 +245,18 @@ function getAttackPower() {
   for (let i = 0; i < inventory.length; i++) {
     attackPower += inventory[i]["power"]
   }
-  attackPower += Math.floor(Math.random() * 4);
+  attackPower += Math.floor(Math.random() * 4); // Damage roll: Adds 0-3 damage to player's attack
+  attackPower += Math.floor(Math.random() * (exp / 4)); // attackPower is boosted based on player's EXP
   return attackPower;
 }
 
 function getEnemyAttackPower() {
   let enemyAttackPower = enemy["power"]
-  enemyAttackPower += Math.floor(Math.random() * 4);
+  enemyAttackPower += Math.floor(Math.random() * 4); // Damage roll: Adds 0-3 damage to enemy's attack
+  enemyAttackPower -= Math.floor(Math.random() * (exp / 5)); // enemyAttackPower is reduced slightly based on player EXP
+  if (enemyAttackPower < 0) {
+    enemyAttackPower = 0; // Prevents negative damage if player EXP is high
+  }
   return enemyAttackPower;
 }
 
@@ -300,18 +305,21 @@ function winGame() {
   text1.textContent = "You pass the code interview, advance through six more stages of interviewing, and receive a job offer! CONGRATULATIONS!";
   text2.style.display = "block";
   text2.textContent = "Thanks for playing!";
+  credits.style.display = "inline";
 }
 
 function gameOver() {
   update(locations[5]);
+  confidenceText.textContent = 0; // Displays confidence as 0 rather than negative number
   text1.textContent = "You lost all confidence! Your dreams of becoming a professional programmer are crushed.";
   text2.style.display = "block";
   text2.style["font-weight"] = "bold";
-  text2.textContent = "G A M E O V E R";
+  text2.textContent = "GAME OVER";
 }
 
 function reset() {
   text2.style["font-weight"] = "normal";
+  credits.style.display = "none";
   exp = 0;
   expText.textContent = exp;
   confidence = 100;
@@ -333,15 +341,15 @@ function reset() {
     },
     {
       "item name": "Gamer Chair",
-      "power": 10
+      "power": 6
     },
     {
       "item name": "RGB Backlit Keyboard",
-      "power": 20,
+      "power": 8,
     },
     {
       "item name": "BS in CS",
-      "power": 30
+      "power": 10
     }
   ]
 

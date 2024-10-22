@@ -68,6 +68,18 @@ button:hover {
   border: 1px solid black;
 }
 
+p {
+  font-size: 1rem;
+  line-height: 1.3rem;
+}
+
 #text2 {
   margin-top: 1rem;
+}
+
+#credits {
+  display: none;
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
 }
